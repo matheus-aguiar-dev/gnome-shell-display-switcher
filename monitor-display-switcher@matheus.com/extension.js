@@ -64,26 +64,19 @@ function init () {
 	hboxMode4.reactive = true;
 
 	hboxMode1.connect('button-press-event', () => {
-		let userExecutable = '/usr/bin/python3 /usr/share/gnome-shell/extensions/monitor-display-switcher@matheus.com/gnome-randr.py  --output eDP-1 --right-of HDMI-1';
-		let rescue = '/usr/bin/python3 /usr/share/gnome-shell/extensions/monitor-display-switcher@matheus.com/gnome-randr.py  --output HDMI-1 --auto';
-		let rescue1 = '/usr/bin/python3 /usr/share/gnome-shell/extensions/monitor-display-switcher@matheus.com/gnome-randr.py  --output eDP-1 --auto';
-		imports.misc.util.trySpawnCommandLine(userExecutable);
-		imports.misc.util.trySpawnCommandLine(rescue);
-		imports.misc.util.trySpawnCommandLine(rescue1);
+        Meta.MonitorManager.get().switch_config(0);
 	});
 
 	hboxMode2.connect('button-press-event', () => {
 		// Perform the desired action here
-		log('BoxLayout clicked!2');
+        Meta.MonitorManager.get().switch_config(1);
 	});
 
 	hboxMode3.connect('button-press-event', () => {
-		let userExecutable = '/usr/bin/python3 /usr/share/gnome-shell/extensions/monitor-display-switcher@matheus.com/gnome-randr.py  --output eDP-1 --off';
-		imports.misc.util.trySpawnCommandLine(userExecutable);
+        Meta.MonitorManager.get().switch_config(2);
 	});
 	hboxMode4.connect('button-press-event', () => {
-		let userExecutable = '/usr/bin/python3 /usr/share/gnome-shell/extensions/monitor-display-switcher@matheus.com/gnome-randr.py  --output HDMI-1 --off';
-		imports.misc.util.trySpawnCommandLine(userExecutable);
+        Meta.MonitorManager.get().switch_config(3);
 	});
 	let imageMode1 = new St.Icon({
 		icon_name: 'image-name',
