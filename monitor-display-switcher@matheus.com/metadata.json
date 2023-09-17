@@ -1,6 +1,6 @@
 {
     "name" : "Monitor Display Switcher",
-    "description" : "A simple web app, using gnome-shell and mutter api",
+    "description" : "A simple extension, using gnome-shell and mutter api",
     "shell-version" : [
         "43"
     ],
