@@ -18,10 +18,10 @@ function changeDisplay(id){
 
 function enable () {
 	global.panel= new SwitcherPanel();
-	global.panel.createWidget("Espelhado","view-mirror-symbolic",changeDisplay, 0)
-	global.panel.createWidget("Extendido","video-joined-displays-symbolic",changeDisplay, 1)
-	global.panel.createWidget("Apenas Externo","video-single-display-symbolic",changeDisplay, 2)
-	global.panel.createWidget("Apenas Externo","computer-symbolic",changeDisplay, 3)
+	global.panel.createWidget("Mirrored","view-mirror-symbolic",changeDisplay, 0)
+	global.panel.createWidget("Extended","video-joined-displays-symbolic",changeDisplay, 1)
+	global.panel.createWidget("Primary Only","video-single-display-symbolic",changeDisplay, 2)
+	global.panel.createWidget("Secondary Only","computer-symbolic",changeDisplay, 3)
 	let my_settings = ExtensionUtils.getSettings("org.gnome.shell.extensions.monitor-display-switcher");
 	Main.wm.addKeybinding("keybinding", my_settings,
 		Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,

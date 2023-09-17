@@ -5,7 +5,7 @@
 		path="/org/gnome/shell/extensions/monitor-display-switcher/">
 
 	<key type="as" name="keybinding">
-		<default><![CDATA[['<Super>p']]]></default>
+		<default><![CDATA[['<Super>i']]]></default>
 			<summary>The shortcut key</summary>
 			<description>
 				You can create GTK entry in prefs and set it as CDATA.
