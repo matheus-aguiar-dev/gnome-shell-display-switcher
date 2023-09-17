@@ -9,7 +9,7 @@ Display Switcher is an extension for gnome-shell 3.36+ that provides an easy and
 
 Current in Development
 
-Want to contribute? Great! Any kind of contribution is valid. See the Contribution Guide for details.
+Want to contribute? Great! Any kind of contribution is valid.
 
 Thanks
 
