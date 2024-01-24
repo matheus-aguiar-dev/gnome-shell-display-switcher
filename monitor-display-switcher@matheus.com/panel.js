@@ -15,7 +15,7 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 		super._init({reactive: true})
 		this.monitor = Main.layoutManager.primaryMonitor;
 		this.selectedIndex = 0;
-		this.panelSize = 300;
+		this.panelSize = 275;
 		this.items = [];
 		this.panel = new St.Bin({
 			style: 'background-color: grey',
@@ -74,21 +74,38 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 			callback(index);
 			this.displaySwitch();
 			});
-		hbox.connect('enter-event', () =>{
-				this.selected(index)
-			} );
 		let imageWidget = new St.Icon({
 			icon_name:  img,
-			style:"margin-left:20px; margin-top:40px",
+			style:"margin-left:20px; margin-top:100px",
 			style_class: 'system-status-icon'
 			});
 		let labelWidget = new St.Label({ text: name,
 			style: `margin-left: 15px;
-				margin-top: 35px;
+				margin-top: 95px;
 				font-size: 20px;
 				font-weight: bold;
 				`, 
 			y_align: Clutter.ActorAlign.CENTER });
+
+		hbox.connect('button-press-event', () => {
+			this.displaySwitch();
+			callback(index);
+			});
+		hbox.connect('enter-event', () =>{
+			this.selected(index)
+        		hbox.ease({
+            			opacity: 127,
+            			duration: 500,
+            			mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+            		onComplete: () => {
+                	hbox.ease({
+                    		opacity: 255,
+                    		duration: 500,
+                    		mode: Clutter.AnimationMode.EASE_OUT_QUAD
+               	 	});
+            		}
+        		});
+			} );
 		hbox.add_child(imageWidget);
 		hbox.add_child(labelWidget);
 		this.items.push(hbox);
@@ -98,6 +115,9 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 		log(this.items)
 		}
 	fadeAndOut(){
+		log("MONITOR x:" +this.monitor.x);
+		log("MONITOR y:" +this.monitor.y);
+		log("MONITOR width: " +this.monitor.width);
 		this.panel.ease({    
 			x: this.monitor.x + this.monitor.width,
 			y: this.monitor.y + 0,
@@ -109,6 +129,7 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 				}
 			});
 		}
+	
 	destroy()
 	{
 		Main.layoutManager.removeChrome(this.panel);
