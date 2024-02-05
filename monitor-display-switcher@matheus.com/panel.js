@@ -39,6 +39,7 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 
 	displaySwitch()
 	{
+
 		this.monitor = Main.layoutManager.primaryMonitor;
 		let [xPos, yPos] = this.panel.get_position();
 		if(xPos === this.monitor.x +  this.monitor.width-this.panelSize){
@@ -60,15 +61,13 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 		return Clutter.EVENT_STOP;  // Indicate that the event is handled
 		}
 
-	/*
-	    GLib.source_remove(_initialDelayTimeoutId);
-    _initialDelayTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, POPUP_DELAY_TIMEOUT, () => {
-	this.displaySwitch();
-	return GLib.SOURCE_REMOVE;
-    });
-	 */
 	createWidget(name, img, callback, index){
 		let hbox = new St.BoxLayout({ vertical: false });
+		let percentMarginTop = 0.133; // 13%
+		let percentIcon = 0.065;
+		let altura = this.monitor.height * percentMarginTop;
+		let alturaLabel = altura - 5;
+		let iconSize =  this.monitor.height * percentIcon;
 		hbox.reactive = true;
 		hbox.connect('button-press-event', () => {
 			callback(index);
@@ -76,12 +75,14 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 			});
 		let imageWidget = new St.Icon({
 			icon_name:  img,
-			style:"margin-left:20px; margin-top:100px",
-			style_class: 'system-status-icon'
+			//style:"margin-left:20px; margin-top:100px",
+			style:'margin-left:20px; margin-top:' + altura + 'px',
+			style_class: 'system-status-icon',
+			icon_size: iconSize
 			});
 		let labelWidget = new St.Label({ text: name,
 			style: `margin-left: 15px;
-				margin-top: 95px;
+				margin-top:` + alturaLabel + `px;
 				font-size: 20px;
 				font-weight: bold;
 				`, 
@@ -114,24 +115,20 @@ var SwitcherPanel = GObject.registerClass(class SwitcherPanel extends St.Widget 
 	selected(index){
 		log(this.items)
 		}
+	destroy()
+	{
+		Main.layoutManager.removeChrome(this.panel);
+	}
 	fadeAndOut(){
-		log("MONITOR x:" +this.monitor.x);
-		log("MONITOR y:" +this.monitor.y);
-		log("MONITOR width: " +this.monitor.width);
-		this.panel.ease({    
-			x: this.monitor.x + this.monitor.width,
+		this.panel.ease({ 
+			x: this.monitor.x + this.monitor.width - 270,
 			y: this.monitor.y + 0,
 			opacity: 0,
 			duration: 500,
 			onComplete: () => {
 				this.panel.width = 0 ;
-			this.remove_actor(this.panel);
+				this.remove_actor(this.panel);
 				}
 			});
-		}
-	
-	destroy()
-	{
-		Main.layoutManager.removeChrome(this.panel);
 		}
 })
